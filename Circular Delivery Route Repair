@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class CircularDeliveryRouteRepair {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] route = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            route[i] = sc.nextInt();
+        }
+
+        System.out.println("Circular Delivery Route:");
+
+        for (int i = 0; i < n; i++) {
+            System.out.print(route[i] + " ");
+        }
+
+        System.out.println();
+
+        System.out.println("Next Delivery Connections:");
+
+        for (int i = 0; i < n; i++) {
+            int next = route[(i + 1) % n];
+            System.out.println(route[i] + " -> " + next);
+        }
+
+        sc.close();
+    }
+}
+input:
+6 2
+11 22 33 44 55 66
+output:
+Circular Delivery Route:
+2 11 22 33 44 55 
+Next Delivery Connections:
+2 -> 11
+11 -> 22
+22 -> 33
+33 -> 44
+44 -> 55
+55 -> 2
