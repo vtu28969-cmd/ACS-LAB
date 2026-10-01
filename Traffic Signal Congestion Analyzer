@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class TrafficSignalCongestionAnalyzer {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("TRAFFIC SIGNAL CONGESTION ANALYZER");
+        System.out.print("Enter number of vehicles waiting: ");
+        int vehicles = sc.nextInt();
+
+        System.out.print("Enter signal waiting time (in seconds): ");
+        int waitingTime = sc.nextInt();
+
+        int congestionScore = vehicles * waitingTime;
+
+        System.out.println("\n--- Analysis Result ---");
+        System.out.println("Vehicles Waiting : " + vehicles);
+        System.out.println("Waiting Time     : " + waitingTime + " seconds");
+        System.out.println("Congestion Score : " + congestionScore);
+
+        if (congestionScore < 100) {
+            System.out.println("Congestion Level  : LOW");
+            System.out.println("Recommendation    : Traffic flow is normal.");
+        } 
+        else if (congestionScore < 300) {
+            System.out.println("Congestion Level  : MEDIUM");
+            System.out.println("Recommendation    : Consider increasing green signal time.");
+        } 
+        else {
+            System.out.println("Congestion Level  : HIGH");
+            System.out.println("Recommendation    : Increase green signal time and manage traffic flow.");
+        }
+
+        sc.close();
+    }
+}
+Sample input:
+Enter number of vehicles waiting: 20
+Enter signal waiting time (in seconds): 20
+Sample Output :
+Vehicles Waiting : 20
+Waiting Time     : 20 seconds
+Congestion Score : 400
+Congestion Level  : HIGH
+Recommendation    : Increase green signal time and manage traffic flow.
