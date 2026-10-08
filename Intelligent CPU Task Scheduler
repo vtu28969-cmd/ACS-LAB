@@ -1,0 +1,59 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int cooldown = sc.nextInt();
+
+        Map<Character, Integer> freq = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            char task = sc.next().charAt(0);
+            freq.put(task, freq.getOrDefault(task, 0) + 1);
+        }
+
+        PriorityQueue<Integer> maxHeap =
+                new PriorityQueue<>(Collections.reverseOrder());
+
+        maxHeap.addAll(freq.values());
+
+        int time = 0;
+
+        while (!maxHeap.isEmpty()) {
+            List<Integer> used = new ArrayList<>();
+
+            // Execute up to cooldown + 1 different tasks
+            for (int i = 0; i <= cooldown; i++) {
+                if (!maxHeap.isEmpty()) {
+                    int count = maxHeap.poll();
+                    count--;
+
+                    if (count > 0) {
+                        used.add(count);
+                    }
+
+                    time++;
+                } else {
+                    // No task left
+                    if (used.isEmpty()) {
+                        break;
+                    }
+                    time++;
+                }
+            }
+
+            maxHeap.addAll(used);
+        }
+
+        System.out.println(time);
+    }
+}
+Input:
+
+6 2
+A A A B B C
+Output:
+
+7
