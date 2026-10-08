@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Factory {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] temp = new int[n];
+        int[] result = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            temp[i] = sc.nextInt();
+            result[i] = -1;
+        }
+
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && temp[i] > temp[stack.peek()]) {
+                result[stack.pop()] = temp[i];
+            }
+            stack.push(i);
+        }
+
+        for (int i = 0; i < n; i++) {
+            System.out.print(result[i] + " ");
+        }
+    }
+Input:
+
+6
+45 32 38 50 48 55
+Output:
+
+50 38 50 55 55 -1
+}
