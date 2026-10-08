@@ -1,0 +1,90 @@
+import java.util.*;
+
+public class system {
+
+    static class Node {
+        int value;
+        int listIndex;
+        int elementIndex;
+
+        Node(int value, int listIndex, int elementIndex) {
+            this.value = value;
+            this.listIndex = listIndex;
+            this.elementIndex = elementIndex;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int m = sc.nextInt();
+        int k = sc.nextInt();
+
+        List<List<Integer>> lists = new ArrayList<>();
+
+        for (int i = 0; i < m; i++) {
+            int size = sc.nextInt();
+            List<Integer> list = new ArrayList<>();
+
+            for (int j = 0; j < size; j++) {
+                list.add(sc.nextInt());
+            }
+
+            lists.add(list);
+        }
+
+        PriorityQueue<Node> heap = new PriorityQueue<>(
+            (a, b) -> Integer.compare(a.value, b.value)
+        );
+
+        for (int i = 0; i < m; i++) {
+            if (!lists.get(i).isEmpty()) {
+                heap.offer(new Node(lists.get(i).get(0), i, 0));
+            }
+        }
+
+        List<Integer> merged = new ArrayList<>();
+
+        while (!heap.isEmpty()) {
+            Node current = heap.poll();
+            merged.add(current.value);
+
+            int nextIndex = current.elementIndex + 1;
+
+            if (nextIndex < lists.get(current.listIndex).size()) {
+                heap.offer(new Node(
+                    lists.get(current.listIndex).get(nextIndex),
+                    current.listIndex,
+                    nextIndex
+                ));
+            }
+        }
+
+        System.out.println("Merged List:");
+        for (int value : merged) {
+            System.out.print(value + " ");
+        }
+
+        System.out.println();
+        System.out.println("Top K:");
+
+        for (int i = merged.size() - 1;
+             i >= merged.size() - k;
+             i--) {
+            System.out.print(merged.get(i) + " ");
+        }
+
+        System.out.println();
+    }
+}
+INPUT
+4 3
+4 2 8 15 21
+3 1 7 18
+5 3 6 12 17 25
+3 4 10 20
+OUTPUT
+Merged List:
+1 2 3 4 6 7 8 10 12 15 17 18 20 21 25
+Top K:
+25 21 20
