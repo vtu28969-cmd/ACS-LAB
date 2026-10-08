@@ -1,0 +1,78 @@
+import java.util.*;
+
+public class Forest {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int rows = sc.nextInt();
+        int cols = sc.nextInt();
+
+        int[][] forest = new int[rows][cols];
+        Queue<int[]> queue = new ArrayDeque<>();
+
+        int remainingTrees = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                forest[i][j] = sc.nextInt();
+
+                if (forest[i][j] == 2) {
+                    queue.offer(new int[]{i, j});
+                } else if (forest[i][j] == 1) {
+                    remainingTrees++;
+                }
+            }
+        }
+
+        int[][] directions = {
+            {-1, 0},
+            {1, 0},
+            {0, -1},
+            {0, 1}
+        };
+
+        int minutes = 0;
+
+        while (!queue.isEmpty() && remainingTrees > 0) {
+            int size = queue.size();
+            minutes++;
+
+            for (int i = 0; i < size; i++) {
+                int[] current = queue.poll();
+                int r = current[0];
+                int c = current[1];
+
+                for (int[] dir : directions) {
+                    int nr = r + dir[0];
+                    int nc = c + dir[1];
+
+                    if (nr >= 0 && nr < rows &&
+                        nc >= 0 && nc < cols &&
+                        forest[nr][nc] == 1) {
+
+                        forest[nr][nc] = 2;
+                        remainingTrees--;
+                        queue.offer(new int[]{nr, nc});
+                    }
+                }
+            }
+        }
+
+        if (remainingTrees == 0) {
+            System.out.println("Minutes = " + minutes);
+        } else {
+            System.out.println("Minutes = -1");
+        }
+    }
+}
+INPUT:
+5 6
+0 2 1 0 0 0
+1 1 1 0 1 1
+0 1 0 0 1 1
+1 1 0 1 1 0
+0 0 0 1 1 1
+OUTPUT:
+Minutes=6
+Minutes = 6
